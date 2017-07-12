@@ -1,7 +1,7 @@
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import requests
-
+# dfdfdfd
 
 url = 'https://www.avito.ru/profile'
 def Page_obj:
