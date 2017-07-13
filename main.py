@@ -65,21 +65,3 @@ print(amur.base_region)
 
 
 
-#
-#
-# def main():
-#     page_obj = requests.get(url)
-#     if page_obj.status_code != 200:
-#         print('Соединение не удалось, проверь правильность URL')
-#     else:
-#         print('Cоединение установлено \n', page_obj.status_code)
-#         return page_obj.text
-#
-# def soup():
-#
-#
-#
-#
-#
-# if __name__== '__main__':
-#     main()
