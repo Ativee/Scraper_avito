@@ -21,7 +21,6 @@ import requests
     - Смежные рубрики
     - Режим работы
 
-    
 3. Запись экземпляра класса в базу данных.
 4. Потроение API для работы с базой данных.
 
@@ -35,32 +34,23 @@ import requests
 
 """
 
-# Класс
-class Main_page:
+# Генерация URL для парсинга страницы
+class Page_url:
     url = 'https://www.2gis.ru/'
     city = ''
 
+# Генерация URL для парсинга страницы
+    def __init__(self, city = 'blagoveshensk'):
+        self.city = city
+        self.url = self.url + city
 
-    def set(self, city):
-        self.city = str(city)
-        base_region = self.url + str(base)
+entry = Page_url()
 
-
-    def dfffd(self):
-        self.dfdf = dfdfd
-
-
-
-class Rec_DB
+print(entry.url)
+r = requests.get(entry.url)
+print(r.text)
 
 
-
-class
-
-amur = Page_html()
-amur.set('blaga')
-
-print(amur.base_region)
 
 
 
