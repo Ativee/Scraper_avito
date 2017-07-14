@@ -1,20 +1,57 @@
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import requests
-# dfdfdfdzx zzxfffff
 
-url = 'https://www.avito.ru/profile'
-def Page_obj:
+"""
+Парсинг сайта 2ГИС для составления базы данных огранизаций 
 
-    page_obj = requests.get(urlopen())
-    if
-    page_kode = requests.get(urlopen())
-    if
-    return
+Алгоритм извлечения данных:
+
+1. Парсинг первой страницы сайта для составления
+    - рубрикатора
+    - списка городов
+    
+2. Структура извлекаемых данных:
+    - Город
+    - Наименование огранизации
+    - Номер телефона
+    - Адресс
+    - E-mail
+    - Сайт
+    - Смежные рубрики
+    - Режим работы
+
+3. Запись экземпляра класса в базу данных.
+4. Потроение API для работы с базой данных.
+
+
+Алгоритм отслеживания изменений и тенденций:
+
+1. Проверка количества организаций по рубрикам
+2. Сводка открывшихся и закрывшихся организаций
+3. Сводка организаций проводящих рекламную компанию
+
+
+"""
+
+# Генерация URL для парсинга страницы
+class Page_url:
+    url = 'https://www.2gis.ru/'
+    city = ''
+
+# Генерация URL для парсинга страницы
+    def __init__(self, city = 'blagoveshensk'):
+        self.city = city
+        self.url = self.url + city
+
+entry = Page_url()
+
+print(entry.url)
+r = requests.get(entry.url)
+print(r.text)
 
 
 
 
 
 
-if __name__== '__main__':
