@@ -1,6 +1,7 @@
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import requests
+import r
 
 """
 Парсинг сайта 2ГИС для составления базы данных огранизаций 
@@ -43,11 +44,16 @@ class Page_url:
     def __init__(self, city = 'blagoveshensk'):
         self.city = city
         self.url = self.url + city
+#  извлечение данных
+
+class pars
+
 
 entry = Page_url()
 
 print(entry.url)
 r = requests.get(entry.url)
+
 print(r.text)
 
 

@@ -24,5 +24,5 @@ class Pars_param_2(Pars_param):
 B = Pars_param_2('url2')
 print('Значение переменной url2 обьекта B равно:', B.url2, '\n','Значение переменной url обьекта B равно:', B.url)
 
-class
+
 # class Object(Pars_param):
