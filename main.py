@@ -1,7 +1,10 @@
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import requests
-import r
+import sys
+import os
+import lxml
+
 
 """
 Парсинг сайта 2ГИС для составления базы данных огранизаций 
@@ -39,22 +42,50 @@ import r
 class Page_url:
     url = 'https://www.2gis.ru/'
     city = ''
+    rubric = 'rubrics'
 
 # Генерация URL для парсинга страницы
     def __init__(self, city = 'blagoveshensk'):
         self.city = city
-        self.url = self.url + city
+        self.url = self.url + city + '/' + self.rubric
 #  извлечение данных
+# https://2gis.ru/blagoveshensk/rubrics
+class pars:
+    pass
 
-class pars
+def main():
+    html = Page_url()
+    # page = (requests.get(html.url)
+    # soup = BeautifulSoup(page.read())
+    # print(page)
+    # print(html.url)
+    html_soup = urlopen(html.url)
+    bsObj = BeautifulSoup(html_soup.read(), "html.parser")
+    h3 = bsObj.find_all('h3',)
+    for i in h3:
+        print(i)
 
 
-entry = Page_url()
+    # print(bsObj)
 
-print(entry.url)
-r = requests.get(entry.url)
 
-print(r.text)
+
+
+
+
+    # entry = Page_url()
+    # print(entry.url)
+    # r = requests.get(entry.url)
+    #
+    # soup = BeautifulSoup(r,'lxml')
+    # print(soup)
+    # print(r.text)
+
+
+
+
+if __name__ == '__main__':
+    main()
 
 
 
