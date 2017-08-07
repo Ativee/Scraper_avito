@@ -1,10 +1,9 @@
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
-import requests
-import sys
-import os
 import lxml
-
+import sqlite3
+import os
+import requests
 
 """
 Парсинг сайта 2ГИС для составления базы данных огранизаций 
@@ -37,49 +36,36 @@ import lxml
 
 
 """
-
+#  список городов              https://2gis.ru/countries/global/blagoveshensk
+# спиок рубрик внутри города   https://2gis.ru/blagoveshensk/rubrics
 # Генерация URL для парсинга страницы
-class Page_url:
-    url = 'https://www.2gis.ru/'
-    city = ''
-    rubric = 'rubrics'
+class Url:
+    rubric = ''
+    def __init__(self, sity = 'blagoveshensk'):
+        self.sity = sity
+        self.entry_rubric = 'https://2gis.ru/' + sity + '/rubrics'
+        self.entry_sity = 'https://2gis.ru/countries/global/' + sity
 
-# Генерация URL для парсинга страницы
-    def __init__(self, city = 'blagoveshensk'):
-        self.city = city
-        self.url = self.url + city + '/' + self.rubric
-#  извлечение данных
-# https://2gis.ru/blagoveshensk/rubrics
-class pars:
-    pass
+    def get_sity_list(self):
+        r = requests.get(self.entry_sity)
+        html = r.text
+        soup = BeautifulSoup(html, 'html.parser')
+        ul = soup.find_all('ul', class_='world__list')
+        print(ul)
+
+
+
+
+
 
 def main():
-    html = Page_url()
-    # page = (requests.get(html.url)
-    # soup = BeautifulSoup(page.read())
-    # print(page)
-    # print(html.url)
-    html_soup = urlopen(html.url)
-    bsObj = BeautifulSoup(html_soup.read(), "html.parser")
-    h3 = bsObj.find_all('h3',)
-    for i in h3:
-        print(i)
-
-
-    # print(bsObj)
+    a = Url()
+    print(a.entry_sity)
+    a.get_sity_list()
 
 
 
 
-
-
-    # entry = Page_url()
-    # print(entry.url)
-    # r = requests.get(entry.url)
-    #
-    # soup = BeautifulSoup(r,'lxml')
-    # print(soup)
-    # print(r.text)
 
 
 
