@@ -50,8 +50,18 @@ class Url:
         r = requests.get(self.entry_sity)
         html = r.text
         soup = BeautifulSoup(html, 'html.parser')
-        ul = soup.find_all('ul', class_='world__list')
+        ul = soup.find('ul', class_='world__list')
+        li = ul.find_all('li')
+        for i in li:
+            h2 = i.find('h2')
+            li_sat = i.find_all('li', class_='world__settlementsItem')
+
+            print(h2)
+            print('  ',li_sat)
+        print(len(li))
+
         print(ul)
+        print(li)
 
 
 
