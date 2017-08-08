@@ -112,6 +112,8 @@ def main():
     a = Url()
     print(a.entry_sity)
     a.get_sity_list()
+
+    foi i in a.sity_link:
     a.rec_sity_list()
     print (a.sity_link[0:5])
 
