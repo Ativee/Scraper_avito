@@ -1,7 +1,7 @@
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import lxml
-import sqlite3
+import sqlite3 as lite
 import os
 import requests
 
@@ -50,20 +50,60 @@ class Url:
         r = requests.get(self.entry_sity)
         html = r.text
         soup = BeautifulSoup(html, 'html.parser')
-        ul = soup.find('ul', class_='world__list')
-        li = ul.find_all('li')
-        for i in li:
-            h2 = i.find('h2')
-            li_sat = i.find_all('li', class_='world__settlementsItem')
+        # блок областного центра ******
+        ul = soup.find_all('li', class_='world__listItem')
+        print(len(ul))
+        self.sity_link = []
+        self.sity_name = []
 
-            print(h2)
-            print('  ',li_sat)
-        print(len(li))
+        for i in ul[0:-18]:
+            h2 = i.find('h2',class_='world__listItemName')
+            a = h2.find('a')
+            a_link = a.get('href')
+            abs_link = 'https://2gis.ru' + a_link + '/rubrics'
+            self.sity_link.append(abs_link)
+            self.sity_name.append(h2.string)
+            # print(h2.string)
+            # print(abs_link)
 
-        print(ul)
-        print(li)
+    def rec_sity_list(self):
+        con = lite.connect('C:\\Users\\Елагин\\PycharmProjects\\Scraper_avito\\GIS.db')
+        with con:
+            cur = con.cursor()
+            cur.execute("INSERT INTO Sities_list (sity) VALUES('hhhh')")
+            # cur.execute("INSERT INTO Sities_list VALUES(link=:link, link )", {"sity": self.sity})
+            con.commit()
+
+        print('запись произведена')
 
 
+
+
+
+
+
+
+
+        # for i in li:
+        #     h2 = i.find('h2', class_="world__listItemName")
+        #
+        #
+        #     print(h2)
+
+            # h2_a = h2.find('a')
+            # link = h2_a.get('href')
+            # li_sat = i.find_all('li', class_='world__settlementsItem')
+            # print('Областной центр: ', h2_text, 'Ссылка: ', link)
+            # for i in li_sat:
+            #     if li_sat is None:
+            #         print("Нет городов сателитов")
+            #     else:
+            #         i.find_all('a')
+            #         for z in i:
+            #             print(z)
+            #         print(len(z))
+
+            # print('',li_sat)
 
 
 
@@ -72,6 +112,9 @@ def main():
     a = Url()
     print(a.entry_sity)
     a.get_sity_list()
+    a.rec_sity_list()
+    print (a.sity_link[0:5])
+
 
 
 
