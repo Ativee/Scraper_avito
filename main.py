@@ -1,6 +1,7 @@
-from urllib.request import urlopen
-from bs4 import BeautifulSoup
 import lxml
+from bs4 import BeautifulSoup
+import re
+
 import sqlite3 as lite
 import os
 import requests
@@ -50,7 +51,29 @@ def get_sities_links():
     # print(cur.fetchall())
     return cur.fetchall()
 
-def get_rubpic:
+
+def get_rubpic(url):
+    r = requests.get(url).text
+    soup = BeautifulSoup(r, "html.parser")
+    li = soup.find_all('li', class_='rubricsList__listItem')
+    for rubr in li:
+        rub = rubr.find('h3')
+        href = rub.find('a').get('href')
+        text = rub.find('a').text
+        result = re.split(r'/',href, maxsplit=3)[-1]
+        print(text,'    Идентификатор рубрики:', int(result) )
+        # print(rub)
+        # print()
+        print(href)
+    pass
+
+def rec_main_rubrick(gis_id, rubr_name,link):
+    con = lite.connect('C:\\Users\\Елагин\\PycharmProjects\\Scraper_avito\\GIS.db')
+    cur = con.cursor()
+    cur.execute('INSERT INTO Main_rubricks(id_gis,name,Link) VALUES (?,?,?)',(gis_id, rubr_name,link))
+    con.commit()
+    con.close()
+
 
 
 class Url:
@@ -89,6 +112,7 @@ class Url:
         #         self.sities_urls.append(sity_url)
         #         # print(h2.string)
         #         # print(abs_li
+
 # def rec(a,b):
 #     con = lite.connect('C:\\Users\\Елагин\\PycharmProjects\\Scraper_avito\\GIS.db')
 #     cur = con.cursor()
@@ -104,8 +128,11 @@ class Url:
 def main():
     katalog_sity = Url()
     sities_list = katalog_sity.f
-    for i in sities_list[0:1]:
-        print(i[-1])
+    print(sities_list[0:1])
+    get_rubpic('https://2gis.ru/abakan/rubrics')
+
+    rec_main_rubrick(2,'dfdd','fcgfg')
+    print('Запись завершена')
 
 
 
