@@ -85,7 +85,7 @@ def rec_main_rubrick(gis_id, rubr_name,link):
 class Url:
     rubric = ''
     f = get_sities_links()
-    rubrick =
+
     def __init__(self, sity = 'blagoveshensk'):
         self.sity = sity
         self.bd_sities = []
@@ -134,17 +134,43 @@ def rubrics_list():
     return cur.fetchall()
     pass
 
+def get_sub_rubricks_links(url_rubr):
+    r = requests.get(url).text
+    soup = BeautifulSoup(r, "html.parser")
+    li = soup.find_all('li', class_='rubricsList__listItem')
+    data = []
+    rubric_data = []
+
+    for rubr in li:
+        rub = rubr.find('h3')
+        href = rub.find('a').get('href')
+        text = rub.find('a').text
+        result = re.split(r'/', href, maxsplit=3)[-1]
+
+        # print(text,'   Идентификатор рубрики:', int(result) )
+        data = [text, int(result), href]
+
+        sub_rubric_data.append(data)
+
+    return sub_rubric_data
+    pass
+
 def main():
     katalog_sity = Url()
     sities_list = katalog_sity.f
     print(len(sities_list))
     for sity in sities_list:
+        url = str(sity[-1]) + '/subrubrics/'
+        for i in rubrics_list():
+            b = url + str(i[-1])
+            print(b)
 
-        Sub_rubricks_link = sity[-1]
-        for
 
 
-        print(sity)
+
+
+
+        print(sity[-1])
 
 
 
