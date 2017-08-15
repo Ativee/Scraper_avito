@@ -1,14 +1,14 @@
-def method_for_simple(self, x, y):
- return x + y
 
-class Simple:
- f = method_for_simple
+
+class primer(*args):
+    for arg in args:
+        print(arg)
+
 
 
 
 def main():
-    s = Simple()
-    print(s.f(1,2))
+    f = []
 
 if __name__ == '__main__':
     main()

@@ -47,7 +47,7 @@ def get_sities_links():
 
     con = lite.connect('C:\\Users\\Елагин\\PycharmProjects\\Scraper_avito\\GIS.db')
     cur = con.cursor()
-    cur.execute('SELECT * FROM Sities_list')
+    cur.execute('SELECT link FROM Sities_list')
     # print(cur.fetchall())
     return cur.fetchall()
 
@@ -56,21 +56,27 @@ def get_rubpic(url):
     r = requests.get(url).text
     soup = BeautifulSoup(r, "html.parser")
     li = soup.find_all('li', class_='rubricsList__listItem')
+    data = []
+    rubric_data = []
+
     for rubr in li:
         rub = rubr.find('h3')
         href = rub.find('a').get('href')
         text = rub.find('a').text
         result = re.split(r'/',href, maxsplit=3)[-1]
-        print(text,'    Идентификатор рубрики:', int(result) )
-        # print(rub)
-        # print()
-        print(href)
-    pass
+
+
+        # print(text,'   Идентификатор рубрики:', int(result) )
+        data = [text, int(result),href]
+
+        rubric_data.append(data)
+
+    return rubric_data
 
 def rec_main_rubrick(gis_id, rubr_name,link):
     con = lite.connect('C:\\Users\\Елагин\\PycharmProjects\\Scraper_avito\\GIS.db')
     cur = con.cursor()
-    cur.execute('INSERT INTO Main_rubricks(id_gis,name,Link) VALUES (?,?,?)',(gis_id, rubr_name,link))
+    cur.execute('INSERT INTO Main_rubricks(name,id_gis,Link) VALUES (?,?,?)',(gis_id, rubr_name,link))
     con.commit()
     con.close()
 
@@ -79,14 +85,10 @@ def rec_main_rubrick(gis_id, rubr_name,link):
 class Url:
     rubric = ''
     f = get_sities_links()
+    rubrick =
     def __init__(self, sity = 'blagoveshensk'):
         self.sity = sity
         self.bd_sities = []
-
-
-
-
-
         # self.entry_rubric = 'https://2gis.ru/' + sity + '/rubrics'
         # self.entry_sity = 'https://2gis.ru/countries/global/' + sity
         # Получение списка городов
@@ -112,7 +114,6 @@ class Url:
         #         self.sities_urls.append(sity_url)
         #         # print(h2.string)
         #         # print(abs_li
-
 # def rec(a,b):
 #     con = lite.connect('C:\\Users\\Елагин\\PycharmProjects\\Scraper_avito\\GIS.db')
 #     cur = con.cursor()
@@ -125,14 +126,29 @@ class Url:
 
 #
 
+def rubrics_list():
+    con = lite.connect('C:\\Users\\Елагин\\PycharmProjects\\Scraper_avito\\GIS.db')
+    cur = con.cursor()
+    cur.execute('SELECT id_gis FROM Main_rubricks')
+    # print(cur.fetchall())
+    return cur.fetchall()
+    pass
+
 def main():
     katalog_sity = Url()
     sities_list = katalog_sity.f
-    print(sities_list[0:1])
-    get_rubpic('https://2gis.ru/abakan/rubrics')
+    print(len(sities_list))
+    for sity in sities_list:
 
-    rec_main_rubrick(2,'dfdd','fcgfg')
-    print('Запись завершена')
+        Sub_rubricks_link = sity[-1]
+        for
+
+
+        print(sity)
+
+
+
+
 
 
 
