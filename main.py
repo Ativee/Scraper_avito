@@ -47,7 +47,7 @@ def get_sities_links():
 
     con = lite.connect('C:\\Users\\Елагин\\PycharmProjects\\Scraper_avito\\GIS.db')
     cur = con.cursor()
-    cur.execute('SELECT link FROM Sities_list')
+    cur.execute('SELECT id,link FROM Sities_list')
     # print(cur.fetchall())
     return cur.fetchall()
 
@@ -129,48 +129,100 @@ class Url:
 def rubrics_list():
     con = lite.connect('C:\\Users\\Елагин\\PycharmProjects\\Scraper_avito\\GIS.db')
     cur = con.cursor()
-    cur.execute('SELECT id_gis FROM Main_rubricks')
+    cur.execute('SELECT id, id_gis FROM Main_rubricks')
     # print(cur.fetchall())
     return cur.fetchall()
     pass
 
-def get_sub_rubricks_links(url_rubr):
-    r = requests.get(url).text
-    soup = BeautifulSoup(r, "html.parser")
+def Bla(url):
+    # url = 'https://2gis.ru/noyabrsk/rubrics/subrubrics/42903'
+    r = requests.get(srt(url)).text
+
+    div = BeautifulSoup(r, "html.parser")
+    diiv = div.find_all('div', class_='rubricsList__content')
+    # li = diiv.find_all('li', class_='rubricsList__listItem')
+
+    print('Количество дивов с классом ',len(diiv))
+    # print(diiv[-1])
+    soup = BeautifulSoup(str(diiv[-1]),"html.parser")
     li = soup.find_all('li', class_='rubricsList__listItem')
-    data = []
-    rubric_data = []
+    result = []
+    for i in li:
+        # rub = i.find('h3')
+        href = i.find('a').get('href')
+        text = i.find('a').text
+        # print(rub)
+        # print(href)
+        # print(text)
+        data = [href,text]
 
-    for rubr in li:
-        rub = rubr.find('h3')
-        href = rub.find('a').get('href')
-        text = rub.find('a').text
-        result = re.split(r'/', href, maxsplit=3)[-1]
+        result.append(data)
+        # print('   ')
+    # print(result)
+    # print(len(result))
+    return result
 
-        # print(text,'   Идентификатор рубрики:', int(result) )
-        data = [text, int(result), href]
 
-        sub_rubric_data.append(data)
 
-    return sub_rubric_data
-    pass
+
+
+
+
+        # print(i)
+
+
+
+
+
+    # li = soup.find_all('li', class_='rubricsList__listItem')
+    # data = []
+    # rubric_data = []
+
+    # for rubr in li:
+    #     print(rubr)
+    #     # rub = rubr.find('h3')
+    #     # href = rub.find('a').get('href')
+    #     # text = rub.find('a').text
+    #     # result = re.split(r'/', href, maxsplit=3)[-1]
+    #
+    #
+    #     # print(text,'   Идентификатор рубрики:', int(result) )
+    #     # data = [text, int(result), href]
+    #     # print(data)
 
 def main():
     katalog_sity = Url()
     sities_list = katalog_sity.f
     print(len(sities_list))
+
+    Bla()
+
+
+
     for sity in sities_list:
         url = str(sity[-1]) + '/subrubrics/'
-        for i in rubrics_list():
-            b = url + str(i[-1])
+        for rubrica in rubrics_list():
+            b = url + str(rubrica[-1])
             print(b)
+            Bla(b)
+            print(Bla()[-1])
+
+
+
+            #  ЗАПИСЬ ПАРАМЕТРОВ В БАЗУ ДАННЫХ
+            # con = lite.connect('C:\\Users\\Елагин\\PycharmProjects\\Scraper_avito\\GIS.db')
+            # cur = con.cursor()
+            # cur.execute('INSERT INTO Sub_rubrics (Sity,Parent_rubric,Sub_rubric_name,Sub_rubric_link) VALUES (?,?,?,?)', (sity[0], rubrica[0], link))
+            # con.commit()
+            # con.close()
 
 
 
 
 
 
-        print(sity[-1])
+
+        # print(sity[-1])
 
 
 
