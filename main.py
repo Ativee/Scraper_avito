@@ -15,6 +15,7 @@ import sys
 1. Парсинг первой страницы сайта для составления
     - рубрикатора
     - списка городов
+    - парсинг подрубрик по городам
     
 2. Структура извлекаемых данных:
     - Город
@@ -189,8 +190,6 @@ import sys
 #     #     # print(text,'   Идентификатор рубрики:', int(result) )
 #     #     # data = [text, int(result), href]
 #     #     # print(data)
-
-
 def Privetstvie():
     print('Программа парсинга сайта 2гис запущена.')
     print('Выберите предложенный режим использования программы:')
@@ -200,10 +199,8 @@ def Privetstvie():
     print('2. ', mode_2)
     mode_3 = 'Фильтр компаний по рубрикам и городам'
     print('3. ', mode_3)
-
 def restart():
     start()
-
 def start(mode):
     if mode == 1:
         print('ВЫБРАННЫЙ РЕЖИМ №',mode,':')
@@ -233,6 +230,8 @@ def start(mode):
     # con.commit()
     # con.close()
 
+
+
 def Selecting_sities(mode):
     def Selecting_all():
         list = []
@@ -241,30 +240,41 @@ def Selecting_sities(mode):
         cur.execute('SELECT * FROM Sities_list')
         for i in cur.fetchall():
             list.append(i)
-        print('Список городов загружен. Всего: ',len(list), 'городов')
         return list
-    def Selecting_one():
+
+    def Spisok_sity():
         for i in Selecting_all():
             print(i[0:2])
-        print("Введите норер города\n")
+        print("ВВЕДИТЕ НОМЕР ГОРОДА\n")
+
+
+    def Selecting_one(sity_id):
+
         con = lite.connect(str(os.getcwd() + '\GIS.db'))
         cur = con.cursor()
-        sity_id = int(input())
-        # print(sity_id)
-        # print(type(sity_id))
-        cur.execute("SELECT sity FROM Sities_list WHERE id=?", (sity_id,))
+        cur.execute("SELECT * FROM Sities_list WHERE id=?", (sity_id,))
         row = cur.fetchall()
+        return row[0]
 
-        print('Выбранный вами город:', row[-1][-1])
+
 
     if mode == 1:
         Selecting_all()
+        print('Список городов загружен. Всего: ', len(Selecting_all()), 'городов')
+
 
     elif mode == 2:
-        Selecting_one()
+        Spisok_sity()
+        sity_id = int(input())
+        print('Выбранный вами город:',Selecting_one(sity_id)[0] )
+
 
     elif mode == 3:
-        Selecting_one()
+        Spisok_sity()
+        sity_id = int(input())
+        print('Выбранный вами город:', Selecting_one(sity_id)[0])
+
+
 
 def Selecting_main_rubric(mode):
     def Selecting_all():
@@ -274,47 +284,39 @@ def Selecting_main_rubric(mode):
         cur.execute('SELECT * FROM Main_rubricks')
         for i in cur.fetchall():
             list.append(i)
-        print('Список основных рубрик загружен. Всего: ',len(list), 'основных рубрик')
+
         return list
-    def Selecting_one():
-        list = []
+
+    def maim_rubric_spisok():
         for i in Selecting_all():
             print(i[1:3])
         print("Введите норер основной рубрики\n")
+
+    def Selecting_one(main_rubric_id):
         con = lite.connect(str(os.getcwd() + '\GIS.db'))
         cur = con.cursor()
-        main_rubric_id = int(input())
-        # print(sity_id)
-        # print(type(sity_id))
         cur.execute("SELECT * FROM Main_rubricks WHERE id=?", (main_rubric_id,))
         row = cur.fetchall()
-        print('Выбранная вами рубрика:', row[0][2])
         return row
 
+
     if mode == 1:
-        Selecting_one()
-        return Selecting_one()
+        maim_rubric_spisok()
+        main_rubric_id = int(input())
+        print('Выбранная вами рубрика:', Selecting_one(main_rubric_id)[0][2])
+
+
 
     elif mode == 2:
         Selecting_all()
-        return Selecting_all()
+        print('Список основных рубрик загружен. Всего: ', len(Selecting_all()), 'основных рубрик')
+
+
 
     elif mode == 3:
-        Selecting_one()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        maim_rubric_spisok()
+        main_rubric_id = int(input())
+        print('Выбранная вами рубрика:', Selecting_one(main_rubric_id)[0][2])
 
 
 
@@ -322,18 +324,34 @@ def Selecting_main_rubric(mode):
     #     print(mode)
     #
 
+#
+def window_mode(mode):
+    if mode ==2:
+        start(mode)
+        Selecting_sities(mode)
+        Selecting_main_rubric(mode)
+    elif mode ==1:
+        start(mode)
+        Selecting_main_rubric(mode)
+        Selecting_sities(mode)
+    elif mode ==3:
+        start(mode)
+        Selecting_main_rubric(mode)
+        Selecting_sities(mode)
+    else:
+        restart()
 
 
 
 def main():
     Privetstvie()
     mode = int(input())
-    start(mode)
-    Selecting_sities(mode)
-    Selecting_main_rubric(mode)
+    window_mode(mode)
 
 
-    # Selecting_main_rubric(mode)
+
+
+
 
 
 
