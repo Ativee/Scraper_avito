@@ -247,19 +247,18 @@ def Selecting_sities(mode):
         for i in Selecting_all():
             print(i[0:2])
         print("Введите норер города\n")
-
         con = lite.connect(str(os.getcwd() + '\GIS.db'))
         cur = con.cursor()
-        # sity = input()
-        cur.execute("SELECT * FROM Sities_list ")
+        sity_id = int(input())
+        # print(sity_id)
+        # print(type(sity_id))
+        cur.execute("SELECT sity FROM Sities_list WHERE id=?", (sity_id,))
+        row = cur.fetchall()
 
-        print('Выбранный вами город:', cur.fetchall())
-
-
+        print('Выбранный вами город:', row[-1][-1])
 
     if mode == 1:
         Selecting_all()
-
 
     elif mode == 2:
         Selecting_one()
@@ -267,15 +266,74 @@ def Selecting_sities(mode):
     elif mode == 3:
         Selecting_one()
 
+def Selecting_main_rubric(mode):
+    def Selecting_all():
+        list = []
+        con = lite.connect(str(os.getcwd() + '\GIS.db'))
+        cur = con.cursor()
+        cur.execute('SELECT * FROM Main_rubricks')
+        for i in cur.fetchall():
+            list.append(i)
+        print('Список основных рубрик загружен. Всего: ',len(list), 'основных рубрик')
+        return list
+    def Selecting_one():
+        list = []
+        for i in Selecting_all():
+            print(i[1:3])
+        print("Введите норер основной рубрики\n")
+        con = lite.connect(str(os.getcwd() + '\GIS.db'))
+        cur = con.cursor()
+        main_rubric_id = int(input())
+        # print(sity_id)
+        # print(type(sity_id))
+        cur.execute("SELECT * FROM Main_rubricks WHERE id=?", (main_rubric_id,))
+        row = cur.fetchall()
+        print('Выбранная вами рубрика:', row[0][2])
+        return row
+
+    if mode == 1:
+        Selecting_one()
+        return Selecting_one()
+
+    elif mode == 2:
+        Selecting_all()
+        return Selecting_all()
+
+    elif mode == 3:
+        Selecting_one()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # def get_url(mode):
+    #     print(mode)
+    #
+
+
+
 
 def main():
     Privetstvie()
-    # mode = int(input())
-    # start(mode)
-    Selecting_sities(mode=2)
+    mode = int(input())
+    start(mode)
+    Selecting_sities(mode)
+    Selecting_main_rubric(mode)
 
 
-
+    # Selecting_main_rubric(mode)
 
 
 

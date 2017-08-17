@@ -14,7 +14,7 @@
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\Ativee\PycharmProjects\Scraper_avito\GIS.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/GIS.db</jdbc-url>
       <driver-properties>
         <property name="enable_load_extension" value="true" />
       </driver-properties>
