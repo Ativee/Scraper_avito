@@ -230,8 +230,6 @@ def start(mode):
     # con.commit()
     # con.close()
 
-
-
 def Selecting_sities(mode):
     def Selecting_all():
         list = []
@@ -273,9 +271,6 @@ def Selecting_sities(mode):
         Spisok_sity()
         sity_id = int(input())
         print('Выбранный вами город:', Selecting_one(sity_id)[0])
-
-
-
 def Selecting_main_rubric(mode):
     def Selecting_all():
         list = []
@@ -323,8 +318,6 @@ def Selecting_main_rubric(mode):
     # def get_url(mode):
     #     print(mode)
     #
-
-#
 def window_mode(mode):
     if mode ==2:
         start(mode)
@@ -342,17 +335,20 @@ def window_mode(mode):
         restart()
 
 
+def Parsing_sub_rubric():
+    def make_url_mode_1():
+        for i in Selecting_sities(1):
+            print(i)
+    make_url_mode_1()
+
+
+
 
 def main():
-    Privetstvie()
-    mode = int(input())
-    window_mode(mode)
-
-
-
-
-
-
+    # Privetstvie()
+    # mode = int(input())
+    # window_mode(mode)
+    Parsing_sub_rubric()
 
 
 
