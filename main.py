@@ -1,6 +1,7 @@
-
+import Parsing
 from bs4 import BeautifulSoup
 import re
+import tkinter
 
 import sqlite3 as lite
 import os
@@ -334,22 +335,22 @@ def window_mode(mode):
     else:
         restart()
 
-
-def Parsing_sub_rubric():
-    def make_url_mode_1():
-        for i in Selecting_sities(1):
-            print(i)
-    make_url_mode_1()
+#
+# def Parsing_sub_rubric():
+#     def make_url_mode_1():
+#         for i in Selecting_sities(1):
+#             print(i)
+#     make_url_mode_1()
 
 
 
 
 def main():
+    tkinter._test()
     # Privetstvie()
     # mode = int(input())
     # window_mode(mode)
-    Parsing_sub_rubric()
-
+    # Parsing_sub_rubric()
 
 
     # katalog_sity = Url()
