@@ -1,78 +1,28 @@
-import Parsing
-from bs4 import BeautifulSoup
-import re
+def output(event):
+    s = ent.get()
+    if s == "1":
+        tex.delete(1.0, END)
+        tex.insert(END, "Обслуживание клиентов на втором этаже")
+    elif s == "2":
+        tex.delete(1.0, END)
+        tex.insert(END, "Пластиковые карты выдают в соседнем здании")
+    else:
+        tex.delete(1.0, END)
+        tex.insert(END, "Введите 1 или 2 в поле слева")
+
 
 from tkinter import *
 
+root = Tk()
 
+ent = Entry(root, width=10)
+but = Button(root, text="Вывести")
+tex = Text(root, width=20, height=3, font="12", wrap=WORD)
 
-# def main():
-#     # Создание основного окна( функция Тк())
-#     root = Tk()
-#     root.title('Программа парсинга 2ГИС')
-#     root.geometry('1000x500+100+325')
-#     # вывод окна на экран
-#
-#
-#     #Создание дочернего окна
-#     second = Toplevel(root)
-#     second.title('Окно выбора параметров программы')
-#     second.geometry('500x250+0+0')
-#
-#     root.mainloop()
-#
-class main_window():
+ent.grid(row=0, column=0, padx=20)
+but.grid(row=0, column=1)
+tex.grid(row=0, column=2, padx=20, pady=10)
 
-    def __init__(self, root):
+but.bind("<Button-1>", output)
 
-        self.master = root
-        self.master.title('Программа парсинга 2ГИС')
-        self.master.geometry('1000x500+100+325')
-
-        c
-
-        self.master.mainloop()
-
-    def child(self):
-        def __init__(self):
-            self.slave = Toplevel()
-            self.slave.title('Параметры парсинга')
-            self.slave.geometry('500x200+50+50')
-
-
-
-def main():
-    root = Tk()
-
-    main_window(root)
-
-
-
-
-
-#
-# def main():
-#     # root = Tk()
-#     # main_window()
-#     root = Tk()
-#
-#     m = Menu(root)  # создается объект Меню на главном окне
-#     root.config(menu=m)  # окно конфигурируется с указанием меню для него
-#
-#     fm = Menu(m)  # создается пункт меню с размещением на основном меню (m)
-#     m.add_cascade(label="File", menu=fm)  # пункту располагается на основном меню (m)
-#     fm.add_command(label="Open...")  # формируется список команд пункта меню
-#     fm.add_command(label="New")
-#     fm.add_command(label="Save...")
-#     fm.add_command(label="Exit")
-#
-#     hm = Menu(m)  # второй пункт меню
-#     m.add_cascade(label="Help", menu=hm)
-#     hm.add_command(label="Help")
-#     hm.add_command(label="About")
-#
-#     root.mainloop()
-
-
-if __name__ == '__main__':
-    main()
+root.mainloop()
