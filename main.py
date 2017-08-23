@@ -1,13 +1,11 @@
 import Parsing
 from bs4 import BeautifulSoup
 import re
-
 from tkinter import *
 import sqlite3 as lite
 import os
 import requests
 import sys
-import Window
 
 """
 Парсинг сайта 2ГИС для составления базы данных огранизаций 
@@ -173,9 +171,9 @@ import Window
 #
 #         # print(i)
 #
-#
-#
-#
+
+
+
 #
 #     # li = soup.find_all('li', class_='rubricsList__listItem')
 #     # data = []
@@ -195,235 +193,199 @@ import Window
 class Form:
     def __init__(self):
         self.root = Tk()
-        self.root.title('Форма для ответа')
+        self.m = self.root.config()
+        self.root.title('Программа парсинга 2ГИС')
         self.root.geometry('500x400+300+200')
         self.width = 50
 
-
-class Question:
-    def __init__(self, form, question):
-        self.lab = Label(form.root, text=question)
-        self.ent = Entry(form.root, width=form.width + 16)
-        self.lab.pack()
-        self.ent.pack()
-
-
-class BigQuestion:
-    def __init__(self, form, question):
-        self.lab = Label(form.root, text=question)
-        self.txt = Text(form.root, width=form.width, height=4)
-        self.lab.pack()
-        self.txt.pack()
+class Menushka:
+    def __init__(self, form):
+        self.m = Menu(form)
+        form.config(menu=self.m)
+        self.fm = Menu(self.m)  # создается пункт меню с размещением на основном меню (m)
+        self.m.add_cascade(label="File", menu=self.fm)  # пункту располагается на основном меню (m)
+        self.fm.add_command(label="Open...")  # формируется список команд пункта меню
+        self.fm.add_command(label="New")
+        self.fm.add_command(label="Save...")
+        self.fm.add_command(label="Exit")
 
 
-class RadioBut:
-    def __init__(self, form, question):
-        self.lab = Label(form.root, text=question)
-        self.lab.pack()
-        self.var = IntVar()
-        self.var.set(1)
-        self.rad0 = Radiobutton(form.root, text="0-9", variable=self.var, value=9)
-        self.rad1 = Radiobutton(form.root, text='10-19', variable=self.var, value=19)
-        self.rad2 = Radiobutton(form.root, text='20-29', variable=self.var, value=29)
-        self.rad3 = Radiobutton(form.root, text='30-39', variable=self.var, value=39)
-        self.rad0.pack()
-        self.rad1.pack()
-        self.rad2.pack()
-        self.rad3.pack()
-
-
-class Flags:
-    def __init__(self, form, question):
-        self.lab = Label(form.root, text=question)
-        self.lab.pack()
-        self.c0 = IntVar()
-        self.c1 = IntVar()
-        self.c2 = IntVar()
-        self.c3 = IntVar()
-        self.che0 = Checkbutton(form.root, text="Красный", bg='red',
-                                variable=self.c0, onvalue=1, offvalue=0)
-        self.che1 = Checkbutton(form.root, text="Синий", bg='blue',
-                                variable=self.c1, onvalue=1, offvalue=0)
-        self.che2 = Checkbutton(form.root, text="Зелёный", bg='green',
-                                variable=self.c2, onvalue=1, offvalue=0)
-        self.che3 = Checkbutton(form.root, text="Жёлтый", bg='yellow',
-                                variable=self.c3, onvalue=1, offvalue=0)
-        self.che0.pack()
-        self.che1.pack()
-        self.che2.pack()
-        self.che3.pack()
-
+class razdelitel:
+    def __init__(self,form):
+        self.delit = PanedWindow(form,orient =HORIZONTAL)
+        self.delit.grid(row=3)
 
 class Scene:
     def __init__(self):
         self.form = Form()
-        self.qstn = Question(self.form, 'Ваш адрес:')
-        self.comm = BigQuestion(self.form, 'Комментарий:')
-        self.radi = RadioBut(self.form, 'Сколько штук?')
-        self.flag = Flags(self.form, 'Какого цвета?')
-        self.butt = Button(self.form.root, text='Отправить')
-        self.butt.pack()
-        self.butt.bind('<Button-1>', self.go)
+        self.menu = Menushka(self.form.root)
+        self.de = razdelitel(self.form.root)
+
+
+
+
+
+
         self.form.root.mainloop()
-
-    def go(self, event):
-        print('Send:\n',
-              'Colors:', self.flag.c0.get(), self.flag.c1.get(),
-              self.flag.c2.get(), self.flag.c3.get(),
-              'Count:', self.radi.var.get(),
-              'Text:', self.qstn.lab.g)
-
-
+    #
+    # def go(self, event):
+    #     print('Send:\n',
+    #           'Colors:', self.flag.c0.get(), self.flag.c1.get(),
+    #           self.flag.c2.get(), self.flag.c3.get(),
+    #           'Count:', self.radi.var.get(),
+    #           'Text:', self.qstn.lab.g)
 
 
 
 
+
+
+
+
+
+# def Privetstvie():
+#     print('Программа парсинга сайта 2гис запущена.')
+#     print('Выберите предложенный режим использования программы:')
+#     mode_1 = 'Фильтр компаний по рубрикам'
+#     print('1. ', mode_1)
+#     mode_2 = 'Фильтр компаний по городам'
+#     print('2. ', mode_2)
+#     mode_3 = 'Фильтр компаний по рубрикам и городам'
+#     print('3. ', mode_3)
+# def restart():
+#     start()
+# def start(mode):
+#     if mode == 1:
+#         print('ВЫБРАННЫЙ РЕЖИМ №',mode,':')
 #
-
-
-def Privetstvie():
-    print('Программа парсинга сайта 2гис запущена.')
-    print('Выберите предложенный режим использования программы:')
-    mode_1 = 'Фильтр компаний по рубрикам'
-    print('1. ', mode_1)
-    mode_2 = 'Фильтр компаний по городам'
-    print('2. ', mode_2)
-    mode_3 = 'Фильтр компаний по рубрикам и городам'
-    print('3. ', mode_3)
-def restart():
-    start()
-def start(mode):
-    if mode == 1:
-        print('ВЫБРАННЫЙ РЕЖИМ №',mode,':')
-
-    elif mode == 2:
-        print('ВЫБРАННЫЙ РЕЖИМ №',mode,':')
-
-    elif mode == 3:
-        print('ВЫБРАННЫЙ РЕЖИМ №',mode,':')
-
-    else:
-        print('Вы ввели неправильный параметр попробуйте еще раз\n\n\n')
-        restart()
-
-
-
-
-
-
-    #     id_sity = input('Введите id города показанный в таблице\n')
-    #     cur.execute('SELECT * FROM Sities_list WHERE id=?',id_sity)
-    #
-    #     print('Выбранный вами город: ', cur.fetchall())
-    #
-    #
-    #
-    # con.commit()
-    # con.close()
-
-def Selecting_sities(mode):
-    def Selecting_all():
-        list = []
-        con = lite.connect(str(os.getcwd() + '\GIS.db'))
-        cur = con.cursor()
-        cur.execute('SELECT * FROM Sities_list')
-        for i in cur.fetchall():
-            list.append(i)
-        return list
-
-    def Spisok_sity():
-        for i in Selecting_all():
-            print(i[0:2])
-        print("ВВЕДИТЕ НОМЕР ГОРОДА\n")
-
-
-    def Selecting_one(sity_id):
-
-        con = lite.connect(str(os.getcwd() + '\GIS.db'))
-        cur = con.cursor()
-        cur.execute("SELECT * FROM Sities_list WHERE id=?", (sity_id,))
-        row = cur.fetchall()
-        return row[0]
-
-
-
-    if mode == 1:
-        Selecting_all()
-        print('Список городов загружен. Всего: ', len(Selecting_all()), 'городов')
-
-
-    elif mode == 2:
-        Spisok_sity()
-        sity_id = int(input())
-        print('Выбранный вами город:',Selecting_one(sity_id)[0] )
-
-
-    elif mode == 3:
-        Spisok_sity()
-        sity_id = int(input())
-        print('Выбранный вами город:', Selecting_one(sity_id)[0])
-def Selecting_main_rubric(mode):
-    def Selecting_all():
-        list = []
-        con = lite.connect(str(os.getcwd() + '\GIS.db'))
-        cur = con.cursor()
-        cur.execute('SELECT * FROM Main_rubricks')
-        for i in cur.fetchall():
-            list.append(i)
-
-        return list
-
-    def maim_rubric_spisok():
-        for i in Selecting_all():
-            print(i[1:3])
-        print("Введите норер основной рубрики\n")
-
-    def Selecting_one(main_rubric_id):
-        con = lite.connect(str(os.getcwd() + '\GIS.db'))
-        cur = con.cursor()
-        cur.execute("SELECT * FROM Main_rubricks WHERE id=?", (main_rubric_id,))
-        row = cur.fetchall()
-        return row
-
-
-    if mode == 1:
-        maim_rubric_spisok()
-        main_rubric_id = int(input())
-        print('Выбранная вами рубрика:', Selecting_one(main_rubric_id)[0][2])
-
-
-
-    elif mode == 2:
-        Selecting_all()
-        print('Список основных рубрик загружен. Всего: ', len(Selecting_all()), 'основных рубрик')
-
-
-
-    elif mode == 3:
-        maim_rubric_spisok()
-        main_rubric_id = int(input())
-        print('Выбранная вами рубрика:', Selecting_one(main_rubric_id)[0][2])
-
-
-
-    # def get_url(mode):
-    #     print(mode)
-    #
-def window_mode(mode):
-    if mode ==2:
-        start(mode)
-        Selecting_sities(mode)
-        Selecting_main_rubric(mode)
-    elif mode ==1:
-        start(mode)
-        Selecting_main_rubric(mode)
-        Selecting_sities(mode)
-    elif mode ==3:
-        start(mode)
-        Selecting_main_rubric(mode)
-        Selecting_sities(mode)
-    else:
-        restart()
+#     elif mode == 2:
+#         print('ВЫБРАННЫЙ РЕЖИМ №',mode,':')
+#
+#     elif mode == 3:
+#         print('ВЫБРАННЫЙ РЕЖИМ №',mode,':')
+#
+#     else:
+#         print('Вы ввели неправильный параметр попробуйте еще раз\n\n\n')
+#         restart()
+#
+#
+#
+#
+#
+#
+#     #     id_sity = input('Введите id города показанный в таблице\n')
+#     #     cur.execute('SELECT * FROM Sities_list WHERE id=?',id_sity)
+#     #
+#     #     print('Выбранный вами город: ', cur.fetchall())
+#     #
+#     #
+#     #
+#     # con.commit()
+#     # con.close()
+#
+# def Selecting_sities(mode):
+#     def Selecting_all():
+#         list = []
+#         con = lite.connect(str(os.getcwd() + '\GIS.db'))
+#         cur = con.cursor()
+#         cur.execute('SELECT * FROM Sities_list')
+#         for i in cur.fetchall():
+#             list.append(i)
+#         return list
+#
+#     def Spisok_sity():
+#         for i in Selecting_all():
+#             print(i[0:2])
+#         print("ВВЕДИТЕ НОМЕР ГОРОДА\n")
+#
+#
+#     def Selecting_one(sity_id):
+#
+#         con = lite.connect(str(os.getcwd() + '\GIS.db'))
+#         cur = con.cursor()
+#         cur.execute("SELECT * FROM Sities_list WHERE id=?", (sity_id,))
+#         row = cur.fetchall()
+#         return row[0]
+#
+#
+#
+#     if mode == 1:
+#         Selecting_all()
+#         print('Список городов загружен. Всего: ', len(Selecting_all()), 'городов')
+#
+#
+#     elif mode == 2:
+#         Spisok_sity()
+#         sity_id = int(input())
+#         print('Выбранный вами город:',Selecting_one(sity_id)[0] )
+#
+#
+#     elif mode == 3:
+#         Spisok_sity()
+#         sity_id = int(input())
+#         print('Выбранный вами город:', Selecting_one(sity_id)[0])
+# def Selecting_main_rubric(mode):
+#     def Selecting_all():
+#         list = []
+#         con = lite.connect(str(os.getcwd() + '\GIS.db'))
+#         cur = con.cursor()
+#         cur.execute('SELECT * FROM Main_rubricks')
+#         for i in cur.fetchall():
+#             list.append(i)
+#
+#         return list
+#
+#     def maim_rubric_spisok():
+#         for i in Selecting_all():
+#             print(i[1:3])
+#         print("Введите норер основной рубрики\n")
+#
+#     def Selecting_one(main_rubric_id):
+#         con = lite.connect(str(os.getcwd() + '\GIS.db'))
+#         cur = con.cursor()
+#         cur.execute("SELECT * FROM Main_rubricks WHERE id=?", (main_rubric_id,))
+#         row = cur.fetchall()
+#         return row
+#
+#
+#     if mode == 1:
+#         maim_rubric_spisok()
+#         main_rubric_id = int(input())
+#         print('Выбранная вами рубрика:', Selecting_one(main_rubric_id)[0][2])
+#
+#
+#
+#     elif mode == 2:
+#         Selecting_all()
+#         print('Список основных рубрик загружен. Всего: ', len(Selecting_all()), 'основных рубрик')
+#
+#
+#
+#     elif mode == 3:
+#         maim_rubric_spisok()
+#         main_rubric_id = int(input())
+#         print('Выбранная вами рубрика:', Selecting_one(main_rubric_id)[0][2])
+#
+#
+#
+#     # def get_url(mode):
+#     #     print(mode)
+#     #
+# def window_mode(mode):
+#     if mode ==2:
+#         start(mode)
+#         Selecting_sities(mode)
+#         Selecting_main_rubric(mode)
+#     elif mode ==1:
+#         start(mode)
+#         Selecting_main_rubric(mode)
+#         Selecting_sities(mode)
+#     elif mode ==3:
+#         start(mode)
+#         Selecting_main_rubric(mode)
+#         Selecting_sities(mode)
+#     else:
+#         restart()
 
 #
 # def Parsing_sub_rubric():
@@ -438,11 +400,11 @@ def window_mode(mode):
 def main():
     scene = Scene()
 
-    main_window()
 
-    Privetstvie()
-    mode = int(input())
-    window_mode(mode)
+    #
+    # Privetstvie()
+    # mode = int(input())
+    # window_mode(mode)
 
     # Parsing_sub_rubric()
 
