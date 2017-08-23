@@ -195,7 +195,7 @@ class Form:
         self.root = Tk()
         self.m = self.root.config()
         self.root.title('Программа парсинга 2ГИС')
-        self.root.geometry('500x400+300+200')
+        self.root.geometry('800x600+50+50')
         self.width = 50
 
 class Menushka:
@@ -210,16 +210,26 @@ class Menushka:
         self.fm.add_command(label="Exit")
 
 
-class razdelitel:
-    def __init__(self,form):
-        self.delit = PanedWindow(form,orient =HORIZONTAL)
-        self.delit.grid(row=3)
+class Create_label:
+    def __init__(self,form,text):
+        self.lab = Label(form)
+        self.lab['text'] = text
+        self.lab.pack()
+
+
+
+
+
+
 
 class Scene:
     def __init__(self):
         self.form = Form()
         self.menu = Menushka(self.form.root)
-        self.de = razdelitel(self.form.root)
+        self.rezhim = Create_label(self.form.root,'ggggg')
+
+        self.rezhim2 = Create_label(self.form.root,'556654')
+
 
 
 
