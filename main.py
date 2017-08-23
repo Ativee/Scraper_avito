@@ -203,18 +203,27 @@ class Menushka:
         self.m = Menu(form)
         form.config(menu=self.m)
         self.fm = Menu(self.m)  # создается пункт меню с размещением на основном меню (m)
-        self.m.add_cascade(label="File", menu=self.fm)  # пункту располагается на основном меню (m)
-        self.fm.add_command(label="Open...")  # формируется список команд пункта меню
-        self.fm.add_command(label="New")
-        self.fm.add_command(label="Save...")
-        self.fm.add_command(label="Exit")
+        self.m.add_cascade(label="Парсинг", menu=self.fm)  # пункту располагается на основном меню (m)
+        self.fm.add_command(label="Открыть из...")  # формируется список команд пункта меню
+        self.fm.add_command(label="Новый проект")
+        self.fm.add_command(label="Сохранить...")
+        self.fm.add_command(label="Выход")
+
+        self.db = Menu(self.m)  # создается пункт меню с размещением на основном меню (m)
+        self.m.add_cascade(label="База данных", menu=self.db)  # пункту располагается на основном меню (m)
+        self.db.add_command(label="Открыть...")  # формируется список команд пункта меню
+        self.db.add_command(label="Новый из парсинга")
+        self.db.add_command(label="Записать...")
+
+
 
 
 class Create_label:
     def __init__(self,form,text):
         self.lab = Label(form)
         self.lab['text'] = text
-        self.lab.pack()
+        self.lab.grid(row=1, column=2, columnspan=1)
+
 
 
 
@@ -226,9 +235,13 @@ class Scene:
     def __init__(self):
         self.form = Form()
         self.menu = Menushka(self.form.root)
-        self.rezhim = Create_label(self.form.root,'ggggg')
 
-        self.rezhim2 = Create_label(self.form.root,'556654')
+        self.rezhim = Create_label(self.form.root,'Параметры парсинга сайта 2Гис').lab.grid(row=0,column=0,columnspan=3)
+        self.rezhim23 = Create_label(self.form.root,'556654').lab.grid(row=7,column=0)
+        self.rezhim6 = Create_label(self.form.root,'556kk654').lab.grid(row=7,column=1)
+        self.rezhim6 = Create_label(self.form.root,'556kk654').lab.grid(row=7,column=2)
+
+
 
 
 
