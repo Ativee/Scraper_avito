@@ -222,9 +222,9 @@ class Create_label:
         self.lab.grid(row=1, column=2, columnspan=1)
 
 class Create_radio_but:
-    def __init__(self, form, question):
+    def __init__(self, form,question):
         self.lab = Label(form.root, text=question)
-        self.lab.grid(row=1, column=0)
+        self.lab.grid(row=1, column=0, columnspan=3, sticky='w')
         self.var = IntVar()
         self.var.set(1)
         self.rad0 = Radiobutton(form.root, text="По рубрикам", variable=self.var,value=1)
@@ -234,26 +234,37 @@ class Create_radio_but:
         self.rad1.grid(row=2, column=1)
         self.rad2.grid(row=2, column=2)
 
-class info_radio_but:
-    def __init__(self,form,v):
-        self.vi = v.get()
-        if self.vi == 1:
-            self.info = 'Выберите необходимые вам рубрики'
-        elif self.vi == 2:
-            self.info = 'Выберите города для их полного распарсивания'
-        elif self.vi == 3:
-            self.info = 'Выберите необходимый город и рубрику'
-        self.lab_info = Label(form.root, self.info)
+class Sity_frame:
+    def __init__(self,form):
+        self.fr1 = Frame(form,width=700,height=200,bg="#CDC9C9")
+        self.fr1.grid(row=3,column=0,columnspan=4)
+
+
 
 class Scene:
     def __init__(self):
         self.form = Form()
         self.menu = Menushka(self.form.root)
-        self.radi = Create_radio_but(self.form, 'Режим парсинга')
-        self.info_rad_but = info_radio_but(self.form, Create_radio_but.var)
+        self.radi = Create_radio_but(self.form,'Выбрать режим парсинга')
+        # self.info_rad_but = info_radio_but(self.form, Create_radio_but.var)
+        self.but = Button(self.form.root, text='Включить режим парсинга')
+        self.but.grid(row=2, column=3,sticky='e')
+        self.but.bind('<Button-1>', self.push)
+        self.fr_sity = Sity_frame(self.form.root)
 
         self.form.root.mainloop()
-    #
+
+    def push(self, event):
+        self.sel =self.radi.var.get()
+        if self.sel == 1:
+
+            print(self.sel)
+        elif self.sel == 2:
+            print(self.sel)
+        elif self.sel == 3:
+            print(self.sel)
+
+
 
 
 
