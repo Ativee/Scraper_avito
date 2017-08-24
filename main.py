@@ -215,48 +215,45 @@ class Menushka:
         self.db.add_command(label="Новый из парсинга")
         self.db.add_command(label="Записать...")
 
-
-
-
 class Create_label:
     def __init__(self,form,text):
         self.lab = Label(form)
         self.lab['text'] = text
         self.lab.grid(row=1, column=2, columnspan=1)
 
+class Create_radio_but:
+    def __init__(self, form, question):
+        self.lab = Label(form.root, text=question)
+        self.lab.grid(row=1, column=0)
+        self.var = IntVar()
+        self.var.set(1)
+        self.rad0 = Radiobutton(form.root, text="По рубрикам", variable=self.var,value=1)
+        self.rad1 = Radiobutton(form.root, text="По городам", variable=self.var,value=2)
+        self.rad2 = Radiobutton(form.root, text="По рубрикам и городам", variable=self.var,value=3)
+        self.rad0.grid(row=2, column=0)
+        self.rad1.grid(row=2, column=1)
+        self.rad2.grid(row=2, column=2)
 
-
-
-
-
-
+class info_radio_but:
+    def __init__(self,form,v):
+        self.vi = v.get()
+        if self.vi == 1:
+            self.info = 'Выберите необходимые вам рубрики'
+        elif self.vi == 2:
+            self.info = 'Выберите города для их полного распарсивания'
+        elif self.vi == 3:
+            self.info = 'Выберите необходимый город и рубрику'
+        self.lab_info = Label(form.root, self.info)
 
 class Scene:
     def __init__(self):
         self.form = Form()
         self.menu = Menushka(self.form.root)
-
-        self.rezhim = Create_label(self.form.root,'Параметры парсинга сайта 2Гис').lab.grid(row=0,column=0,columnspan=3)
-        self.rezhim23 = Create_label(self.form.root,'556654').lab.grid(row=7,column=0)
-        self.rezhim6 = Create_label(self.form.root,'556kk654').lab.grid(row=7,column=1)
-        self.rezhim6 = Create_label(self.form.root,'556kk654').lab.grid(row=7,column=2)
-
-
-
-
-
-
-
-
+        self.radi = Create_radio_but(self.form, 'Режим парсинга')
+        self.info_rad_but = info_radio_but(self.form, Create_radio_but.var)
 
         self.form.root.mainloop()
     #
-    # def go(self, event):
-    #     print('Send:\n',
-    #           'Colors:', self.flag.c0.get(), self.flag.c1.get(),
-    #           self.flag.c2.get(), self.flag.c3.get(),
-    #           'Count:', self.radi.var.get(),
-    #           'Text:', self.qstn.lab.g)
 
 
 
