@@ -198,6 +198,8 @@ class Form:
         self.root.geometry('800x600+50+50')
         self.width = 50
 
+
+
 class Menushka:
     def __init__(self, form):
         self.m = Menu(form)
@@ -234,36 +236,69 @@ class Create_radio_but:
         self.rad1.grid(row=2, column=1)
         self.rad2.grid(row=2, column=2)
 
-class Sity_frame:
+class Pars_param_sity_frame:
     def __init__(self,form):
-        self.fr1 = Frame(form,width=700,height=200,bg="#CDC9C9")
-        self.fr1.grid(row=3,column=0,columnspan=4)
+        self.fr1 = Frame(form,width=400,height=200,bg="#CDC9C9")
+        self.fr1.grid(row=3,column=0,columnspan=2)
+
+class Pars_param_rubrick_frame:
+    def __init__(self,form):
+        self.fr2 = Frame(form,width=400,height=200,bg="#8B8989")
+        self.fr2.grid(row=3,column=2,columnspan=2)
+
+class Sity_list_box:
+
+    def __init__(self):
+
+    def Selecting_sities(mode):
+
+
 
 
 
 class Scene:
     def __init__(self):
         self.form = Form()
+        # создаю меню
         self.menu = Menushka(self.form.root)
+        # Создаю группу радиокнопок
         self.radi = Create_radio_but(self.form,'Выбрать режим парсинга')
-        # self.info_rad_but = info_radio_but(self.form, Create_radio_but.var)
-        self.but = Button(self.form.root, text='Включить режим парсинга')
-        self.but.grid(row=2, column=3,sticky='e')
-        self.but.bind('<Button-1>', self.push)
-        self.fr_sity = Sity_frame(self.form.root)
+        # Создаю кнопку для отправки результата из группы
+        self.Send_pars_param = Button(self.form.root, text='Включить режим парсинга')
+        # Позиционирую кнопку
+        self.Send_pars_param.grid(row=2, column=3, sticky='e')
+        # Связываю нажатие на кнопку с  функцией *** Pars_param_func ***
+        self.Send_pars_param.bind('<Button-1>', self.Pars_param_func)
+        # Создаю основной фрейм для отображения списков рубрик и городов
+        self.fr_sity = Pars_param_sity_frame(self.form.root)
+        # Создаю два подфрейма для
+        # №1 для отображения списка городов
+        # №2 для отображения списка рубрик
+        # №3 появление данных фреймов регулируется функцией: ***  ***
+        self.sity_fr = Pars_param_rubrick_frame(self.form.root)
+
+
+
+
+
+
 
         self.form.root.mainloop()
-
-    def push(self, event):
+    # Функция обрабатывает результат выбора режима парсинга
+    # работает от *** Send_pars_param ***
+    def Pars_param_func(self, event):
         self.sel =self.radi.var.get()
         if self.sel == 1:
-
             print(self.sel)
         elif self.sel == 2:
             print(self.sel)
         elif self.sel == 3:
             print(self.sel)
 
+
+
+
+    #
 
 
 
