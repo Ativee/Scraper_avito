@@ -1,28 +1,34 @@
-def output(event):
-    s = ent.get()
-    if s == "1":
-        tex.delete(1.0, END)
-        tex.insert(END, "Обслуживание клиентов на втором этаже")
-    elif s == "2":
-        tex.delete(1.0, END)
-        tex.insert(END, "Пластиковые карты выдают в соседнем здании")
-    else:
-        tex.delete(1.0, END)
-        tex.insert(END, "Введите 1 или 2 в поле слева")
-
-
 from tkinter import *
 
-root = Tk()
+# Виджеты
+root = Tk() # окно
+root.title("Вставка строки")
 
-ent = Entry(root, width=1)
-but = Button(root, text="Вывести")
-tex = Text(root, width=20, height=3, font="12", wrap=WORD)
+l_in=Label(root,text="Вставить") # метки
+l_num=Label(root,text="Кол-во")
+l_pos=Label(root,text="Положение")
 
-ent.grid(row=0, column=0, padx=20)
-but.grid(row=0, column=1)
-tex.grid(row=0, column=2, padx=20, pady=10)
+e_num=Entry(root, width=5, bg="White") # текстовое поле
 
-but.bind("<Button-1>", output)
+pos = IntVar() # радиокнопки
+pos.set(0)
+r_pos1=Radiobutton(root,text="До", variable=pos, value=0)
+r_pos2=Radiobutton(root,text="После", variable=pos, value=1)
 
-root.mainloop() 
+b_ok=Button(root,text="OK", width=10) # Кнопки
+b_canc=Button(root,text="Отмена", width=10)
+b_help=Button(root,text="Справка", width=10)
+
+# Размещение виджетов
+l_in.grid(row=0,column=0,columnspan=2,sticky=W,pady=5)
+l_num.grid(row=1,column=0)
+e_num.grid(row=1,column=1,sticky=W)
+l_pos.grid(row=2,column=0,columnspan=2,sticky=W)
+r_pos1.grid(row=3,column=0,sticky=W,padx=5)
+r_pos2.grid(row=4,column=0,sticky=W,padx=5)
+b_ok.grid(row=1,column=2,padx=10,pady=5)
+b_canc.grid(row=2,column=2,padx=10,pady=5)
+b_help.grid(row=3,column=2,padx=10,pady=5)
+#...
+
+root.mainloop()

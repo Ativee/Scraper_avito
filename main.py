@@ -226,32 +226,43 @@ class Create_label:
 class Create_radio_but:
     def __init__(self, form,question):
         self.lab = Label(form.root, text=question)
-        self.lab.grid(row=1, column=0, columnspan=3, sticky='w')
+        self.lab.grid(row=1, column=0, columnspan=3, sticky='w',padx=10)
         self.var = IntVar()
         self.var.set(1)
         self.rad0 = Radiobutton(form.root, text="По рубрикам", variable=self.var,value=1)
         self.rad1 = Radiobutton(form.root, text="По городам", variable=self.var,value=2)
         self.rad2 = Radiobutton(form.root, text="По рубрикам и городам", variable=self.var,value=3)
-        self.rad0.grid(row=2, column=0)
-        self.rad1.grid(row=2, column=1)
-        self.rad2.grid(row=2, column=2)
+        self.rad0.grid(row=2, column=0,padx=10)
+        self.rad1.grid(row=2, column=1,padx=10)
+        self.rad2.grid(row=2, column=2,padx=5)
 
 class Pars_param_sity_frame:
-    def __init__(self,form):
+    def __init__(self,form,lis):
         self.fr1 = Frame(form,width=400,height=200,bg="#CDC9C9")
         self.fr1.grid(row=3,column=0,columnspan=2)
+        self.fr_sity_label = Label(self.fr1,text='Список городов для парсинга').grid()
+
+
 
 class Pars_param_rubrick_frame:
     def __init__(self,form):
         self.fr2 = Frame(form,width=400,height=200,bg="#8B8989")
         self.fr2.grid(row=3,column=2,columnspan=2)
+        self.fr_rubrick_label = Create_label(self.fr2,'Список рубрик для парсинга')
 
-class Sity_list_box:
 
-    def __init__(self):
+# class Sity_frame_list:
+#
+#
+#     def __init__(self,form):
+#         for i in
 
-    def Selecting_sities(mode):
 
+    # def Selecting_sities(self):
+    #     self.list = []
+    #     self.con = lite.connect(str(os.getcwd() + '\GIS.db'))
+    #     self.cur = con.cursor()
+ self.list
 
 
 
@@ -266,16 +277,17 @@ class Scene:
         # Создаю кнопку для отправки результата из группы
         self.Send_pars_param = Button(self.form.root, text='Включить режим парсинга')
         # Позиционирую кнопку
-        self.Send_pars_param.grid(row=2, column=3, sticky='e')
+        self.Send_pars_param.grid(row=2, column=3, sticky='e',padx=35)
         # Связываю нажатие на кнопку с  функцией *** Pars_param_func ***
         self.Send_pars_param.bind('<Button-1>', self.Pars_param_func)
-        # Создаю основной фрейм для отображения списков рубрик и городов
-        self.fr_sity = Pars_param_sity_frame(self.form.root)
         # Создаю два подфрейма для
+
         # №1 для отображения списка городов
+        self.fr_sity = Pars_param_sity_frame(self.form.root)
+
         # №2 для отображения списка рубрик
-        # №3 появление данных фреймов регулируется функцией: ***  ***
-        self.sity_fr = Pars_param_rubrick_frame(self.form.root)
+        self.fr_rubrick = Pars_param_rubrick_frame(self.form.root)
+
 
 
 
@@ -284,12 +296,23 @@ class Scene:
 
 
         self.form.root.mainloop()
+
+    def List_sity(self):
+        self.list = []
+        self.con = lite.connect(str(os.getcwd() + '\GIS.db'))
+        self.cur = self.con.cursor()
+        self.cur.execute('SELECT * FROM Sities_list')
+        for i in self.cur.fetchall():
+        self.list.append(i)
+        return self.list
+
+
     # Функция обрабатывает результат выбора режима парсинга
     # работает от *** Send_pars_param ***
     def Pars_param_func(self, event):
         self.sel =self.radi.var.get()
         if self.sel == 1:
-            print(self.sel)
+            print(self.sel, len())
         elif self.sel == 2:
             print(self.sel)
         elif self.sel == 3:
@@ -298,7 +321,10 @@ class Scene:
 
 
 
+
+
     #
+
 
 
 
