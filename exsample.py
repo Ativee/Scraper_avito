@@ -1,34 +1,44 @@
 from tkinter import *
 
-# Виджеты
-root = Tk() # окно
-root.title("Вставка строки")
+root = Tk()
 
-l_in=Label(root,text="Вставить") # метки
-l_num=Label(root,text="Кол-во")
-l_pos=Label(root,text="Положение")
+var0 = StringVar()  # значение каждого флажка ...
+var1 = StringVar()  # ... хранится в собственной переменной
+var2 = StringVar()
+# если флажок установлен, то в ассоциированную переменную ...
+# ...(var0,var1 или var2) заносится значение onvalue, ...
+# ...если флажок снят, то - offvalue.
+ch0 = Checkbutton(root, text="Окружность", variable=var0,
+                  onvalue="circle", offvalue="-")
+ch1 = Checkbutton(root, text="Квадрат", variable=var1,
+                  onvalue="square", offvalue="-")
+ch2 = Checkbutton(root, text="Треугольник", variable=var2,
+                  onvalue="triangle", offvalue="-")
 
-e_num=Entry(root, width=5, bg="White") # текстовое поле
+lis = Listbox(root, height=3)
 
-pos = IntVar() # радиокнопки
-pos.set(0)
-r_pos1=Radiobutton(root,text="До", variable=pos, value=0)
-r_pos2=Radiobutton(root,text="После", variable=pos, value=1)
 
-b_ok=Button(root,text="OK", width=10) # Кнопки
-b_canc=Button(root,text="Отмена", width=10)
-b_help=Button(root,text="Справка", width=10)
+def result(event):
+    v0 = var0.get()
+    v1 = var1.get()
+    v2 = var2.get()
+    l = [v0, v1, v2]  # значения переменных заносятся в список
+    lis.delete(0, 2)  # предыдущее содержимое удаляется из Listbox
+    for v in l:  # содержимое списка l последовательно ...
+        lis.insert(END, v)  # ...вставляется в Listbox
 
-# Размещение виджетов
-l_in.grid(row=0,column=0,columnspan=2,sticky=W,pady=5)
-l_num.grid(row=1,column=0)
-e_num.grid(row=1,column=1,sticky=W)
-l_pos.grid(row=2,column=0,columnspan=2,sticky=W)
-r_pos1.grid(row=3,column=0,sticky=W,padx=5)
-r_pos2.grid(row=4,column=0,sticky=W,padx=5)
-b_ok.grid(row=1,column=2,padx=10,pady=5)
-b_canc.grid(row=2,column=2,padx=10,pady=5)
-b_help.grid(row=3,column=2,padx=10,pady=5)
-#...
+
+but = Button(root, text="Получить значения")
+but.bind('<Button-1>', result)
+
+ch0.deselect()  # "по умолчанию" флажки сняты
+ch1.deselect()
+ch2.deselect()
+
+ch0.pack()
+ch1.pack()
+ch2.pack()
+but.pack()
+lis.pack()
 
 root.mainloop()

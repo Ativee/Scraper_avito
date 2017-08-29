@@ -28,11 +28,11 @@ class Main_window():
 
 
 
-    def Open_Sity_list_window(self):
-        List_window(self.main_win, 'Отметьте нужные вам города')
+    def Open_Sity_list_window(self,):
+        List_window(self.main_win, 'Отметьте нужные вам города',2)
 
     def Open_Rubrick_list_window(self):
-        List_window(self.main_win, 'Отметьте нужные вам рубрики')
+        List_window(self.main_win, 'Отметьте нужные вам рубрики',1)
 
 
 
@@ -56,28 +56,65 @@ class Menushka:
 
 
 class List_window():
-    def __init__(self,parent, title):
-
+    def __init__(self,parent, title,param_ex):
         self.Sity_list_win = Toplevel(parent)
         self.Sity_list_win.title(title)
         self.Sity_list_win.geometry('800x600+100+100')
-        self.project_name =Label_info(self.Sity_list_win, 'Выберите нужные вам города, при необходимости можно выбрать')
-        #
-        self.lis = Listbox(self.Sity_list_win, height=8, width=20,selectmode=MULTIPLE)
-
+        if param_ex == 1:
+            self.project_name = Label_info(self.Sity_list_win,'Отметьте необходимые вам рубрики ')
+        elif param_ex == 2:
+            self.project_name = Label_info(self.Sity_list_win,'Отметьте необходимые вам города')
+        # Создаю список (городов или рубрик)
+        self.lis = Listbox(self.Sity_list_win, height=8, width=50,selectmode=MULTIPLE)
         self.list = []
         self.con = lite.connect(str(os.getcwd() + '\GIS.db'))
         self.cur = self.con.cursor()
-        self.cur.execute('SELECT * FROM Sities_list')
-        self.row_ind = 1
-        for i in self.cur.fetchall():
-            self.row_ind += 1
-            self.lis.insert(END, i[0])
-        self.lis.grid(row=3 , column=0, columnspan=2)
+        if param_ex ==1:
+            self.cur.execute("SELECT * FROM Main_rubricks")
+            self.row_ind = 1
+            for i in self.cur.fetchall():
+                self.row_ind += 1
+                self.lis.insert(END, i[2])
+            self.lis.grid(row=3, column=0, columnspan=2, sticky='w')
+
+        elif param_ex ==2:
+            self.cur.execute("SELECT * FROM Sities_list")
+            self.row_ind = 1
+            for i in self.cur.fetchall():
+                self.row_ind += 1
+                self.lis.insert(END, i[0])
+            self.lis.grid(row=3, column=0, columnspan=2, sticky='w')
+
+        # создаю кнопку и связываю ее с функцией Print_text
+        self.sity_list_result = Button(self.Sity_list_win, text='Подтвердите ваш выбор', command=self.get_selection)
+
+        self.sity_list_result.grid(row=4, column=0, sticky='w')
+
+    def Print_text(self):
+        self.var =self.lis.get(0,END)
+        print('Выбранные параметры из списка', self.var)
+
+    def get_selection(self):
+        list_box = self.lis
+        selection = list_box.curselection()
+        print(selection)
 
 
 
-        #     self.ss = Label(self.Sity_list_win,text=i).grid(row=2 + self.row_ind, column=1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+            #     self.ss = Label(self.Sity_list_win,text=i).grid(row=2 + self.row_ind, column=1)
         #
         #
         #
