@@ -1,10 +1,12 @@
-class Main(tk.Frame):
+from tkinter import *
+import tkinter as tk
+class Main(Frame):
     def __init__(self, root):
         super().__init__(root)
         self.init_main()
 
     def init_main(self):
-        toolbar = tk.Frame(bg='#d7d8e0', bd=2)
+        toolbar = Frame(bg='#d7d8e0', bd=2)
         toolbar.pack(side=tk.TOP, fill=tk.X)
 
         btnOpenDialog = tk.Button(toolbar, text='Добавить позицию', command=self.open_dialog, bg='#d7d8e0', bd=0,
@@ -15,7 +17,7 @@ class Main(tk.Frame):
         Child()
 
 
-class Child(tk.Toplevel):
+class Child(Toplevel):
     def __init__(self):
         super().__init__(root)
         self.title('Добавить доходы/расходы')
@@ -24,7 +26,7 @@ class Child(tk.Toplevel):
 
 
 if __name__ == "__main__":
-    root = tk.Tk()
+    root = Tk()
     app = Main(root)
     app.pack()
     root.title("Домашние финансы")
