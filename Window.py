@@ -15,40 +15,32 @@ class Form:
         self.root.title('Программа парсинга 2ГИС')
         self.root.geometry('800x600+50+50')
         self.width = 50
+        self.a = self.Show_param(('dfd','d','d','d','d','ds'))
+        self.root.mainloop()
+
+    def Show_param(self,param):
+        z =1
+        for i in param:
+            z +=1
+            self.i = Label(self.root, text=i)
+            self.i.grid(row=z)
 
 
-class Sity_frame_list:
-    def __init__(self, form):
-        self.k =1
-        for i in self.Selecting_sities:
-            self.v
-            self.k +=1
 
 
 
+# class Scene:
+#     def __init__(self):
+#         self.form = Form()
 
 
-    def Selecting_sities(self):
-        self.list = []
-        self.con = lite.connect(str(os.getcwd() + '\GIS.db'))
-        self.cur = con.cursor()
-        self.cur.execute('SELECT * FROM Sities_list')
-        for i in self.cur.fetchall():
-            self.list.append(i)
-        return self.list
-
-class Scene:
-    def __init__(self):
-        self.form = Form()
-        self.fr = Sity_frame_list(self.form.root)
-
-
-        self.form.root.mainloop()
+        #
+        # self.form.root.mainloop()
 
 
 
 def main():
-    scene = Scene()
+    scene = Form()
 
 
 
