@@ -15,8 +15,9 @@ class Main_window():
         self.main_win.geometry('800x600+50+50')
         self.main_win.config()
         Menushka(self.main_win)
+        # Кнопка выбора города
         self.sity_list = Button_sity_list_win(self.main_win, self.Open_Sity_list_window,'Выберите необходимые города')
-
+        # Кнопка выбора рубрики
         self.rubric_list = Button_sity_list_win(self.main_win, self.Open_Rubrick_list_window,'Выберите необходимые рубрики')
         self.rubric_list.Sity_list_button.grid(row=3,
                                    column=3,
@@ -39,14 +40,14 @@ class Main_window():
     # def Show_param(self,main_win, *param):
     #
     #         # label_par = Label(self.main_win, i)
-class Show_param:
-    def __call__(self, main_win, *param):
-        z = 8
-        for i in param:
-            z += 10
-            self.param_sity_list = Label_info(main_win, i)
-            self.param_sity_list.grid(row=z, columm=5)
-            print('Тестовая кнопка в классе Main_window', i)
+# class Show_param:
+#     def __call__(self, main_win, *param):
+#         z = 8
+#         for i in param:
+#             z += 10
+#             self.param_sity_list = Label_info(main_win, i)
+#             self.param_sity_list.grid(row=z, columm=5)
+#             print('Тестовая кнопка в классе Main_window', i)
 
 class Menushka:
     def __init__(self, main_win):

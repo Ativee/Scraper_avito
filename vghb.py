@@ -1,3 +1,4 @@
+
 # импортирование модулей python
 from tkinter import *
 
@@ -58,4 +59,4 @@ class child:
 root = Tk()
 
 # запуск окна
-main(root) 
+main(root)

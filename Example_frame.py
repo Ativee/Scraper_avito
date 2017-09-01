@@ -1,18 +1,20 @@
-from tkinter import *
+from tkinter import *                          # get widget classes
+from tkinter.messagebox import askokcancel     # get canned std dialog
 
-class Hello(Frame):
-    def __init__(self, parent=None):
-        Frame.__init__(self, parent)
-        self.pack()
-        self.data = 42
-        self.make_widgets()
+class Quitter1(Button):                          # subclass our GUI
+    def __init__(self, master):           # constructor method
+        Button.__init__(self, master)
+        widget = Button(master, text='Quit', command=self.quit1)
+        widget.pack(side=LEFT, expand=YES, fill=BOTH)
+        self.P = master
 
-    def make_widgets(self):
-        widget = Button(self, text='Кнопка', command=self.massage)
-        widget.pack
+    def quit1(self):
+        ans = askokcancel('Verify exit', "Really quit?")
+        if ans:
+            self.P.quit()
+            self.P.destroy()
 
-    def massage(self):
-        self.data +=1
-        print('Выводим в поток значение переменной data %s ' %self.data)
-
-if __name__ == '__main__': Hello().mainloop()
+if __name__ == '__main__':
+    root = Tk()
+    Q = Quitter1(root)
+    Q.mainloop()
