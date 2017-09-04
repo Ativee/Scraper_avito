@@ -1,21 +1,18 @@
-import tkinter
-import tkinter.messagebox
-class Quitter(tkinter.Frame):
-    def __init__(self, parent=None):
-        tkinter.Frame.__init__(self, parent)
-        self.pack()
-        widget = tkinter.Button(self, text='Quit', command=self.quit)
-        widget.pack(side='left', expand='yes', fill=tkinter.BOTH)
-    def quit(self):
-        ans = tkinter.messagebox.askokcancel('Verify exit', "Really quit?")
-        if ans: tkinter.Frame.quit(self)
-if __name__ == '__main__':  Quitter().mainloop()
+from tkinter import *
+root = Tk()
+root.wm_geometry("%dx%d+%d+%d" % (400, 150, 20, 40))
+listbox_items = ['Раз', 'Два', 'Три']
 
 
-def main():
-    scene = Form()
+def select_item(event):
+    value = (listbox.get(listbox.curselection()))
+    print(value)
 
 
+listbox = Listbox(root, width=40, height=5, font=('times', 13))
+listbox.bind('<<ListboxSelect>>', select_item)
+listbox.place(x=15, y=15)
 
-if __name__ == '__main__':
-    main()
+for item in listbox_items:
+    listbox.insert(END, item)
+root.mainloop()
