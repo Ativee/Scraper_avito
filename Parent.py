@@ -14,42 +14,34 @@ class Parent():
         self.parent_window = root
         self.parent_window.title('Программа парсинга 2Гис')
         self.parent_window.geometry('800x600+50+50')
-        # Menushka(self.parent_window)
+        Menushka(self.parent_window)
+
+        # Кнопка открытия выбора списка городов
         self.btn_name = 'Выберите город'
         self.btn = Button(root, text=self.btn_name,
-                          command= lambda parent=self.parent_window,name = self.btn_name: (Child(parent,name)))
+                          command= lambda par=self.parent_window: Sities_list_box(par))
         self.btn.grid(row=1, column=0)
 
+        # Кнопка открытия выбора списка рубрик
         self.btn2_name = 'Выберите рубрику'
         self.btn2 = Button(root, text=self.btn2_name,
-                          command=lambda parent=self.parent_window, name=self.btn2_name: (Child(parent, name)))
+                          command=lambda parent=self.parent_window: Rubricks_list_box(parent))
         self.btn2.grid(row=1, column=1)
 
         # *****
-        self.men = Button(root, text=self.btn_name,
-                          command=lambda : Menushka(self.parent_window))
-        self.men.grid(row=3, column=0)
+        # self.men = Button(root, text=self.btn_name,
+        #                   # command=lambda : Menushka(self.parent_window)
+        #                   )
+        # self.men.grid(row=3, column=0)
         # self.sities = get_lis(Child.lis)
 
 
         # Выбранные города
-        self.Sity = Label(self.parent_window, text='Выбранные города:  ')
-        self.Sity.grid(row=2, column=0)
+
         # Выбранные рубрики
-        self.Sity = Label(self.parent_window, text='Выбранные рубрики:  ')
-        self.Sity.grid(row=2, column=1)
+
 
         self.parent_window.mainloop()
-
-        # Label_1(self.parent_window)
-    # def get_lis(self,listi='без параметров'):
-    #
-    #     self.data_get = listi.curselection()
-    #     self.Label_1(self.parent_window, self.data_get)
-
-
-
-
 
 class Menushka:
     def __init__(self, main_win):
@@ -81,35 +73,39 @@ class Menushka:
 #                 self.label = Label(self.par, text=i)
 #                 self.label.grid(row=self.row_numb)
 
-class Child:
-    def __init__(self, main_win, name):
-        self.parent = main_win
-        # self.child = Toplevel(parent)
-        # self.child.title(name)
-        # self.child.geometry('400x220+400+300')
+class Sities_list_box:
+    def __init__(self, main_win):
+        self.par = main_win
+        # self.Sity = Label(self.par, text='Выбранные города:  ')
+        # self.Sity.grid(row=2, column=0)
+        # Список
+        self.lis = Listbox(self.par, height=8, width=65, selectmode=MULTIPLE)
+        for i in Data('Sity'):
+            self.lis.insert(END, i)
+        #     2
+        self.lis.grid(row=2,column=2, sticky='n')
+        # Кнопка скрыть форму и
+        self.btn_send = Button(self.par, text='Подтвердите ваш выбор',
+                               command=lambda listis=self.lis: get_lis(listis)
+                               )
+        self.btn_send.grid(row=3)
 
-        self.label = Label(self.parent,text=name)
-        self.label.grid(row=1,)
+class Rubricks_list_box:
+    def __init__(self, main_win):
+        self.parent = main_win
+        # self.Sity = Label(self.parent, text='Выбранные рубрики:  ')
+        # self.Sity.grid(row=2, column=1)
         # Список
         self.lis = Listbox(self.parent, height=8, width=65, selectmode=MULTIPLE)
-        for i in Data(name):
-            if name == 'Выберите рубрику':
-                self.lis.insert(END, i[2])
-            elif name == 'Выберите город':
-                self.lis.insert(END, i[0])
-
-        self.lis.grid(row=4, sticky='n')
-
-        # Кнопка получить и отправить значения в родительское окно
+        for i in Data('Rubr'):
+            self.lis.insert(END, i)
+        #     0
+        self.lis.grid(row=2,column=1, sticky='n')
+        # Кнопка скрыть форму и
         self.btn_send = Button(self.parent, text='Подтвердите ваш выбор',
                                # command=lambda listis=self.lis: get_lis(listis)
                                )
         self.btn_send.grid(row=5)
-
-        # self.child.focus_set()
-        # self.child.grab_set()
-        # self.child.wait_window()
-
 
 # def create_listbox(list):
 #     data_get = list.curselection()
@@ -122,9 +118,9 @@ class Child:
 def Data(name):
     con = lite.connect(str(os.getcwd() + '\GIS.db'))
     cur = con.cursor()
-    if name == 'Выберите рубрику':
+    if name == 'Rubr':
         cur.execute("SELECT * FROM Main_rubricks")
-    elif name == 'Выберите город':
+    elif name == 'Sity':
         cur.execute("SELECT * FROM Sities_list")
 
     data = cur.fetchall()
@@ -152,3 +148,5 @@ def Main():
 
 if __name__ == '__main__':
     Main()
+
+
