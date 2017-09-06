@@ -19,15 +19,14 @@ class Parent():
         # Кнопка открытия выбора списка городов
         self.btn_name = 'Выберите город'
         self.btn = Button(root, text=self.btn_name,
-                          command= lambda par=self.parent_window: Sities_list_box(par))
+                          command= lambda par=self.parent_window,: Sities_list_box(par))
         self.btn.grid(row=1, column=0)
 
         # Кнопка открытия выбора списка рубрик
         self.btn2_name = 'Выберите рубрику'
         self.btn2 = Button(root, text=self.btn2_name,
-                          command=lambda parent=self.parent_window: Rubricks_list_box(parent))
+                          command=lambda par=self.parent_window: Rubricks_list_box(par))
         self.btn2.grid(row=1, column=1)
-
         # *****
         # self.men = Button(root, text=self.btn_name,
         #                   # command=lambda : Menushka(self.parent_window)
@@ -80,15 +79,17 @@ class Sities_list_box:
         # self.Sity.grid(row=2, column=0)
         # Список
         self.lis = Listbox(self.par, height=8, width=65, selectmode=MULTIPLE)
+
         for i in Data('Sity'):
-            self.lis.insert(END, i)
-        #     2
-        self.lis.grid(row=2,column=2, sticky='n')
+            self.lis.insert(END, i[0])
+
+
+        self.lis.grid(row=2,column=0, sticky='n')
         # Кнопка скрыть форму и
         self.btn_send = Button(self.par, text='Подтвердите ваш выбор',
-                               command=lambda listis=self.lis: get_lis(listis)
+                               command=lambda listis=self.lis: Sities_sel(self.par,listis)
                                )
-        self.btn_send.grid(row=3)
+        self.btn_send.grid(row=3,column=0)
 
 class Rubricks_list_box:
     def __init__(self, main_win):
@@ -98,14 +99,57 @@ class Rubricks_list_box:
         # Список
         self.lis = Listbox(self.parent, height=8, width=65, selectmode=MULTIPLE)
         for i in Data('Rubr'):
-            self.lis.insert(END, i)
-        #     0
+            self.lis.insert(END, i[2])
+
         self.lis.grid(row=2,column=1, sticky='n')
-        # Кнопка скрыть форму и
+        # Кнопка скрыть форму
         self.btn_send = Button(self.parent, text='Подтвердите ваш выбор',
-                               # command=lambda listis=self.lis: get_lis(listis)
+                               command=lambda listis=self.lis: Rubrick_sel(self.parent,listis)
                                )
-        self.btn_send.grid(row=5)
+        self.btn_send.grid(row=3,column=1)
+#
+class Sities_sel:
+    def __init__(self,parent,question):
+        self.pa = parent
+        self.slave = Toplevel(self.pa)
+        self.sel = question.curselection()
+
+        self.slave.title('child')
+        self.slave.geometry('200x150+500+375')
+        self.lanel = Label(self.slave, text='Всего выбрано: '+str(len(self.sel))+' городов')
+        self.lanel.grid()
+        for i in self.sel:
+            print(Data('Sity')[i][0])
+            self.lanel_sel = Label(self.slave, text=str(Data('Sity')[i][0]))
+            self.lanel_sel.grid()
+
+
+        self.slave.grab_set()
+        self.slave.focus_set()
+        self.slave.wait_window()
+
+
+
+
+class Rubrick_sel:
+    def __init__(self, parent, question):
+        self.pa = parent
+        self.slave = Toplevel(self.pa)
+        self.sel = question.curselection()
+
+        self.slave.title('child')
+        self.slave.geometry('300x150+500+375')
+        self.lanel = Label(self.slave, text='Всего выбрано: ' + str(len(self.sel)) + ' рубрик')
+        self.lanel.grid()
+        for i in self.sel:
+            # print(Data('Rubr')[i][2])
+            self.lanel_sel = Label(self.slave, text=str(Data('Rubr')[i][2]))
+            self.lanel_sel.grid()
+
+        self.slave.grab_set()
+        self.slave.focus_set()
+        self.slave.wait_window()
+
 
 # def create_listbox(list):
 #     data_get = list.curselection()
