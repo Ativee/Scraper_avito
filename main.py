@@ -69,13 +69,20 @@ class Start_parsing:
                            # command=lambda par=self.parent_window: Rubricks_list_box(par)
                            )
         self.btn3.grid(row=5, column=0)
+        s =0
+
 
         for i in Parsing_sity:
-          sity_url = Data('Sity')[i][2]
-          for rub in Parsing_rubrick:
-              subr_id = Data('Rubr')[rub][0]
-              url = sity_url + '/' + str(subr_id)
-              self.url_generate(url)
+            s += 1
+            print('Прозведен парсинг ' + str(s)+ ' городов')
+            r= 0
+            sity_url = Data('Sity')[i][2]
+            for rub in Parsing_rubrick:
+                r+=1
+                print('Рубрика'+str(r)+'внутри, категории '+ str(i) )
+                subr_id = Data('Rubr')[rub][0]
+                url = sity_url + '/' + str(subr_id)
+                self.url_generate(url)
 
     def url_generate(self,url):
         response = requests.get(url)
