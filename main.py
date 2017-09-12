@@ -7,6 +7,7 @@ import requests
 import sqlite3 as lite
 from bs4 import BeautifulSoup
 from selenium import webdriver
+import time
 
 
 
@@ -70,28 +71,28 @@ class Start_parsing:
                            )
         self.btn3.grid(row=5, column=0)
         s =0
-
-
         for i in Parsing_sity:
             s += 1
-            print('Прозведен парсинг ' + str(s)+ ' городов')
+            param = []
+            print(str(s),' Прозведится парсинг города: ' +str(Data('Sity')[i][0]))
             r= 0
             sity_url = Data('Sity')[i][2]
             for rub in Parsing_rubrick:
                 r+=1
-                print('Рубрика'+str(r)+'внутри, категории '+ str(i) )
+                time.sleep(1)
+                print('Парсинг рубрики: '+str(Data('Rubr')[rub][2]))
                 subr_id = Data('Rubr')[rub][0]
-                url = sity_url + '/' + str(subr_id)
+                url = str(sity_url + '/' + str(subr_id)+'/?')
                 self.url_generate(url)
 
     def url_generate(self,url):
         response = requests.get(url)
-        print(url)
-        print(response.status_code)  # Код ответа
-        print(response.headers)  # Заголовки ответа
-        print(response.content)  # Тело ответа
+        print('   Страница рубрики для дальнейшей обработки',url)
+        print('   ',response.status_code)  # Код ответа
+        # print(response.headers)  # Заголовки ответа
+        # print(response.text)  # Тело ответа
 
-        print(url)
+        # print(url)
 
         # # soup = BeautifulSoup(response.content)
         # # soup.find_all()
@@ -218,7 +219,7 @@ def Pars():
 def Main():
     root = Tk()
     root.title('Через функцию main')
-    print(Parsing_sity)
+    # print(Parsing_sity)
 
 
     main = Parent(root)
