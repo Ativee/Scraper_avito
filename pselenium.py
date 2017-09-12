@@ -25,7 +25,7 @@ def sel_scrapy(page):
             print(ihh.text)
 
         print(len(subb))
-        print('***********************************')
+        # print('***********************************')
         time.sleep(5)
 
         driver.back()
