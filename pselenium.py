@@ -9,22 +9,32 @@ page = "https://2gis.ru/moscow/rubrics"
 def sel_scrapy(page):
     driver = webdriver.Chrome()
     driver.get(page)
-    driver.set_page_load_timeout(10)
+    # driver.set_page_load_timeout(6)
     # time.sleep(5)
-    # rubr = driver.find_element_by_link_text('Все рубрики').click()
+    # driver.find_element_by_link_text('Все рубрики').click()
     # driver.get_screenshot_as_file('page_code')
     # rubr
-    # driver.set_page_load_timeout(5)
+    # time.sleep(5)
+    driver.set_page_load_timeout(8)
     rubricks = driver.find_elements_by_class_name('rubricsList__listItemLink')
 
     for i in rubricks:
         z = i.click()
-        time.sleep(5)
-        subb = driver.find_elements_by_class_name('rubricsList__listItemLink')
-        for ihh in subb:
-            print(ihh.text)
+        time.sleep(3)
+        subrubricks = i.find_elements_by_class_name('rubricsList__listItemLink')
+        print('Список рубрик: ', i.text)
 
-        print(len(subb))
+        for subrubrick in subrubricks:
+            lll = subrubrick.find_elements_by_class_name('rubricsList__listItemLink')
+            for i in lll:
+                i.click()
+
+
+
+            print(i.text)
+            time.sleep(3)
+
+        print(len(subrubricks))
         # print('***********************************')
         time.sleep(5)
 
@@ -35,16 +45,16 @@ def sel_scrapy(page):
 
 
 
-    # r = requests.get(page)
-    #
-    # soup = BeautifulSoup(r.content,'html.parser')
-    # sub_sub = soup.find_all('a', class_='link _scheme_none rubricsList__listItemLinkTitle')
-    # print(len(sub_sub))
-    # sub_sub_list =[]
-    # for i in sub_sub[27:]:
-    #     sub_sub_list.append(i)
-    #
-    #     print(i)
+        # r = requests.get(page)
+        #
+        # soup = BeautifulSoup(r.content,'html.parser')
+        # sub_sub = soup.find_all('a', class_='link _scheme_none rubricsList__listItemLinkTitle')
+        # print(len(sub_sub))
+        # sub_sub_list =[]
+        # for i in sub_sub[27:]:
+        #     sub_sub_list.append(i)
+        #
+        #     print(i)
 
 
 
