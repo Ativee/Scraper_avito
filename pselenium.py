@@ -7,6 +7,7 @@ import urllib
 
 page = "https://2gis.ru/moscow/rubrics"
 def sel_scrapy(page):
+    # Открываю страницу определенного города
     driver = webdriver.Chrome()
     driver.get(page)
     # driver.set_page_load_timeout(6)
@@ -15,30 +16,46 @@ def sel_scrapy(page):
     # driver.get_screenshot_as_file('page_code')
     # rubr
     # time.sleep(5)
-    driver.set_page_load_timeout(8)
+    driver.set_page_load_timeout(5)
+    # Поиск всех рубрик
     rubricks = driver.find_elements_by_class_name('rubricsList__listItemLink')
+    print('Всего найдено: ', len(rubricks), ' рубрик')
+    # Обход всех рубрик и открытие подрубрик
+    for rub in rubricks:
 
-    for i in rubricks:
-        z = i.click()
-        time.sleep(3)
-        subrubricks = i.find_elements_by_class_name('rubricsList__listItemLink')
-        print('Список рубрик: ', i.text)
-
-        for subrubrick in subrubricks:
-            lll = subrubrick.find_elements_by_class_name('rubricsList__listItemLink')
-            for i in lll:
-                i.click()
+        print(str(rubricks.index(rub)+1) + ' '+ str(rub.text))
+        # open_subrubrick = rub.click()
+        driver.set_page_load_timeout(3)
+       
+        # print(art)
 
 
+        # Поиск всех подрубрик
 
-            print(i.text)
-            time.sleep(3)
+        subrubricks = rub.find_element_by_xpath('//*[@id="module-1-13-2-1"]/div/section/div[2]/ul/li[2]/h3/a')
+        print('Тип subrubricks: ' + str(type(subrubricks)))
+        print('************************')
+        # print('Найдено '+ str(len(subrubricks))+ ' подрубрик')
+        print('Найдена одна подрубрика:')
+        # for i in subrubricks:
+        #     print(i.text)
 
-        print(len(subrubricks))
-        # print('***********************************')
-        time.sleep(5)
 
+
+        print('***********************************')
+        # time.sleep(180)
         driver.back()
+        # обход всех подрубрик и поиск всех фирм
+        # for subrubrick in subrubricks:
+        #     lll = subrubrick.find_elements_by_class_name('rubricsList__listItemLink')
+        #     print()
+        #     открытие фирм
+        #     for i in lll:
+        #         i.click()
+        #     print(i.text)
+        #     time.sleep(3)
+
+
 
 
 
