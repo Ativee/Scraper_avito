@@ -4,57 +4,43 @@ from selenium.webdriver.common.keys import Keys
 import math
 import re
 
+# Стартовая страница
 page = "https://2gis.ru/blagoveshensk?queryState=center%2F127.520714%2C50.291313%2Fzoom%2F11"
+
+# Инициализация селениума
 driver = webdriver.Chrome()
 driver.get(page)
 driver.set_page_load_timeout(3)
-print('провожу поиск формы поиска')
-search = driver.find_element_by_name('search[query]')
-
+try:
+    search = driver.find_element_by_name('search[query]')
+except :
+:
+    print('Проблемы с определением формы поиска')
+print('Определение формы поиска произведено успешно')
 driver.set_page_load_timeout(5)
-time.sleep(5)
-page = search.send_keys('магазин',Keys.ENTER)
-driver.set_page_load_timeout(5)
-time.sleep(5)
-# ПОИСК КОЛИЧЕСТВА СТРАНИЦ
-# count_pages = driver.find_element_by_class_name('pagination__arrow _right')
-# count_pages.click()
 # time.sleep(5)
-#
-# print('Количество страниц ',len())
-#
-# # ПОИСК ПО ТЕКСТУ ССЫЛКИ
-# i =2
-# while i < 6:
-#     i+=1
-#     result_page= driver.find_element_by_link_text(str(i))
-#
-#     result_page.click()
-#     time.sleep(7)
+search_key = 'магазин'
+print('Поисковый запрос: "', search_key, '"')
+page = search.send_keys(search_key, Keys.ENTER)
+driver.set_page_load_timeout(5)
+time.sleep(5)
 
-
-
-# *** ПОИСК ПО ИМЕНИ КЛАССА
-# ПОИСК ОБЩЕГО КОЛИЧЕСТВА ОРГАНИЗАЦИЙ
-total_count_res = driver.find_element_by_class_name('searchResults__headerName')
-total_count_res_text = total_count_res.text
+# ПОИСК КОЛИЧЕСТВА СТРАНИЦ
+total_count_firms = driver.find_element_by_class_name('searchResults__headerName')
+total_count_res_text = total_count_firms.text
 digit_total_count_res = re.findall('\d+', total_count_res_text)
 print('Количество найденых организаций:',digit_total_count_res )
 
 # НАХОЖДЕНИЕ КОЛИЧЕСТВА СТРАНИЦ
 
 pr_count_iter = int(digit_total_count_res[-1])/12
-
-print (pr_count_iter)
-# result_pages = driver.find_element_by_link_text()
-
 bb =  math.ceil(pr_count_iter)
-print('Количество страниц в поисковой выдаче ',bb)
+print('Количество страниц в справочнике организаций ',bb)
 i=1
 
 
 firm_name = driver.find_elements_by_class_name('miniCard__headerTitle')
-print('Найдено' + str(len(firm_name)) + ' элементов:')
+print('Найдено' + str(len(firm_name)) + ' элементов на странице:')
 index_data = 0
 for i in firm_name:
     index_data += 1
@@ -85,70 +71,6 @@ for i in firm_name:
 #     time.sleep(5)
 
 
-
-    # index_page= str(i)
-    # print(index_page)
-    # result_page.click()
-    #
-    # firm_name = driver.find_elements_by_class_name('miniCard__headerTitle')
-    # print('Найдено' + str(len(firm_name)) + ' элементов:')
-    # index_data = 0
-    # for i in firm_name:
-    #     index_data += 1
-    #     print(' ***', ' ', index_data, ' ', i.text)
-    #     i.click()
-    #     time.sleep(3)
-
-
-
-#
-# count_iter = len(result_pages)
-# fff = driver.find_element_by_class_name('pagination__page _current')
-# print('Текущая страница', fff.text)
-#
-# for result_page in result_pages:
-#
-#     print('Вывод результатов с страницы №', result_page.text)
-#     time.sleep(3)
-#     firm_name = driver.find_elements_by_class_name('miniCard__headerTitle')
-#     print('Найдено' + str(len(firm_name)) + ' элементов:')
-#     index_data = 0
-#     for i in firm_name:
-#         index_data += 1
-#         print(' ***', ' ', index_data, ' ', i.text)
-#         i.click()
-#         time.sleep(3)
-#
-#
-#     page_index = int(result_page.text)+1
-#     print('Произвожу переход на', page_index,'страницу посковой выдачи')
-#     count_pages = driver.find_element_by_class_name('pagination__arrow _right')
-#     count_pages.click()
-#     # result_page.click()
-#     time.sleep(3)
-# #
-# i.click()
-# time.sleep(3)
-
-# # print('Произвожу переход на следующую страницу:')
-# i =0
-# while i <5:
-#     i+=1
-#     elm_iters = driver.find_element_by_id('pnnext')
-#     elm_iters.click()
-#     time.sleep(5)
-
-
-
-# elm_iter = driver.find_elements_by_id()_by_id('pnnext')
-
-# for i in elm_iters:
-#     i.click()
-#     time.sleep(5)
-
-# elm_iter.click()
-driver.set_page_load_timeout(5)
-time.sleep(5)
 
 
 
